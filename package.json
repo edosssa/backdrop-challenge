@@ -9,7 +9,8 @@
     "start": "node build/src/app.js",
     "build": "tsc",
     "dev": "tsnd --respawn src/app.ts",
-    "test": "cross-env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'tests/**/*.ts' --timeout 5000"
+    "test": "cross-env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'tests/**/*.ts' --timeout 5000",
+    "deploy": "git push heroku master"
   },
   "dependencies": {
     "express": "^4.17.1",
