@@ -7,7 +7,9 @@ import { InMemoryAdapter } from "./lib/storage";
 import { getShortenUrlRoute } from "./routes";
 
 export const server = express();
+// This can be swapped out for say a Redis or a MongoDB implementation. See src/lib/storage
 setDefaultContext({ db: new InMemoryAdapter() });
+// setDefaultContext({ db: new RedisAdapter() });
 
 server.use(
   "/graphql",

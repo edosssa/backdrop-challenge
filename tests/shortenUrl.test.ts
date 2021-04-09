@@ -9,7 +9,7 @@ describe("ShortenUrl mutation", () => {
       .set("Accept", "application/json")
       .expect("Content-Type", /json/)
       .send({
-        query: 'mutation tiny($url: String!) { shortenURL(url: $url) { shortUrl } }',
+        query: "mutation tiny($url: String!) { shortenURL(url: $url) { shortUrl } }",
         variables: { url: "https://google.com" },
       })
       .expect(200)
@@ -23,15 +23,15 @@ describe("ShortenUrl mutation", () => {
   });
 
   it("Returns same short url for multiple calls", (done) => {
-    const getShortUrl = (): Promise<string> => {
+    const getShortUrl = (longUrl: string): Promise<string> => {
       return new Promise((resolve) => {
         request
           .post("/graphql")
           .set("Accept", "application/json")
           .expect("Content-Type", /json/)
           .send({
-            query: 'mutation tiny($url: String!) { shortenURL(url: $url) { shortUrl } }',
-            variables: { url: "https://google.com" },
+            query: "mutation tiny($url: String!) { shortenURL(url: $url) { shortUrl } }",
+            variables: { url: longUrl },
           })
           .expect(200)
           .end((err, res) => {
@@ -44,8 +44,10 @@ describe("ShortenUrl mutation", () => {
       });
     };
 
-    getShortUrl().then((shortUrl) => {
-      getShortUrl().then((shortUrl2) => {
+    const url = "https://google.com";
+    
+    getShortUrl(url).then((shortUrl) => {
+      getShortUrl(url).then((shortUrl2) => {
         chai.assert.equal(shortUrl, shortUrl2);
         done();
       });

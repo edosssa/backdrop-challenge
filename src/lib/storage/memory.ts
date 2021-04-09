@@ -4,6 +4,10 @@ import { Url } from "./models/url";
 export class InMemoryAdapter implements StorageAdapter {
   store: Url[];
 
+  /**
+   * In-memory backing store for the graphql API
+   * @param seed For testing purposes
+   */
   constructor(seed?: Url[]) {
     this.store = seed ? seed : [];
   }
