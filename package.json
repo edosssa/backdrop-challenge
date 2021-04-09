@@ -6,7 +6,6 @@
   "author": "Edosa Kelvin <edosakelvin@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "prestart": "yarn build",
     "start": "node build/src/app.js",
     "build": "tsc",
     "dev": "tsnd --respawn src/app.ts",
