@@ -1,1 +1,1 @@
-export * from "./getShortRoute"
+export * from "./redirectToUrl"

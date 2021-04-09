@@ -4,7 +4,7 @@ import { graphiql } from "./graphiql";
 import { resolverRoot, schema } from "./graph";
 import { getDefaultContext, setDefaultContext } from "./graph/context";
 import { InMemoryAdapter } from "./lib/storage";
-import { getShortenUrlRoute } from "./routes";
+import { redirectToUrl } from "./routes";
 
 export const server = express();
 // This can be swapped out for say a Redis or a MongoDB implementation. See src/lib/storage
@@ -35,4 +35,4 @@ const defaultQuery = `mutation tinyUrl($url: String!) {
 
 server.use("/graphiql", graphiql({ query: defaultQuery, variables: { url: "https://buycoins.africa" } }));
 
-server.use(getShortenUrlRoute);
+server.use(redirectToUrl);

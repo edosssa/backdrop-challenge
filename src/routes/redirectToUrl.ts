@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { getDefaultContext } from "../graph/context";
 
-export const getShortenUrlRoute = Router();
+export const redirectToUrl = Router();
 
-getShortenUrlRoute.get("/:shortUrl", async (req, res) => {
+redirectToUrl.get("/:shortUrl", async (req, res) => {
   const shortUrlCode = req.params.shortUrl;
   const ctx = getDefaultContext();
   const url = await ctx.db.findByUrlCode(shortUrlCode);
