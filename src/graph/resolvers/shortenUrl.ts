@@ -8,7 +8,7 @@ type ShortenUrlArgs = {
 
 export const shortenUrlMutation = async (args: ShortenUrlArgs, ctx: Context) => {
   const longUrl = args.url;
-  const baseUrl = process.env.baseURL as string;
+  const baseUrl = process.env.BASE_URL as string;
 
   if (!validUrl.isUri(baseUrl)) {
     throw new Error("Internal error. Please come back later.");
