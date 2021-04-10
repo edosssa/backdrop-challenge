@@ -1,8 +1,8 @@
 import chai from "chai";
-import { http, https } from "follow-redirects";
+import { https } from "follow-redirects";
 import { request } from "./util";
 import validUrl from "valid-url";
-import normalizeURL from 'normalize-url'
+import normalizeURL from "normalize-url";
 
 describe("Generated short urls", () => {
   it("Redirect to long url", (done) => {
