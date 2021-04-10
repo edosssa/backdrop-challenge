@@ -1,6 +1,7 @@
 import { Context } from "../context";
 import nanoid from "nanoid";
 import validUrl from "valid-url";
+import { getBaseUrl } from "../../config";
 
 type ShortenUrlArgs = {
   url: string;
@@ -8,7 +9,7 @@ type ShortenUrlArgs = {
 
 export const shortenURL = async (args: ShortenUrlArgs, ctx: Context) => {
   const longUrl = args.url;
-  const baseUrl = process.env.BASE_URL as string;
+  const baseUrl = getBaseUrl();
 
   if (!validUrl.isUri(baseUrl)) {
     throw new Error("Internal error. Please come back later.");
@@ -22,7 +23,7 @@ export const shortenURL = async (args: ShortenUrlArgs, ctx: Context) => {
   // If this url has already been shortened, just return it
   if (url) return url;
 
-  const urlCode = nanoid.nanoid(6)
+  const urlCode = nanoid.nanoid(6);
   const shortUrl = baseUrl + "/" + urlCode;
 
   return await ctx.db.create({ longUrl, shortUrl, urlCode, host: baseUrl });
