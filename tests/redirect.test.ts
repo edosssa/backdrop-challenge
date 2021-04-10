@@ -15,7 +15,6 @@ describe("Generated short urls", () => {
       .send({ query: `query tiny($url: String!) { shortenURL(url: $url) { shortUrl, host } }`, variables: { url } })
       .expect(200)
       .end((err, res) => {
-        // console.log(JSON.stringify(res.body));
         if (err) return done(err);
         const shortUrl = res.body.data.shortenURL.shortUrl;
         chai.assert.exists(shortUrl);
