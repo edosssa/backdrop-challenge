@@ -4,7 +4,7 @@ View the deployed version at [https://backdrop-challenge.herokuapp.com](https://
 
 ## Highlights ✨
 
-- Fully functional GraphQL server as per the challenge requirements
+- Fully functional GraphQL API as per the challenge requirements
 - Integration tests using Mocha, Chai and supertest
 - Continuous integration (CI) using Github actions
 - 100% Typescript, because it's not 2005 anymore
