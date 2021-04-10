@@ -6,7 +6,7 @@
   "author": "Edosa Kelvin <edosakelvin@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "node build/src/app.js",
+    "start": "ts-node src/app.ts",
     "build": "tsc",
     "dev": "tsnd --respawn src/app.ts",
     "test": "cross-env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'tests/**/*.ts' --timeout 5000",
