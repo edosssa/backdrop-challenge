@@ -9,7 +9,7 @@ describe("ShortenUrl mutation", () => {
       .set("Accept", "application/json")
       .expect("Content-Type", /json/)
       .send({
-        query: "mutation tiny($url: String!) { shortenURL(url: $url) { shortUrl } }",
+        query: "query tiny($url: String!) { shortenURL(url: $url) { shortUrl } }",
         variables: { url: "https://google.com" },
       })
       .expect(200)
@@ -30,7 +30,7 @@ describe("ShortenUrl mutation", () => {
           .set("Accept", "application/json")
           .expect("Content-Type", /json/)
           .send({
-            query: "mutation tiny($url: String!) { shortenURL(url: $url) { shortUrl } }",
+            query: "query tiny($url: String!) { shortenURL(url: $url) { shortUrl } }",
             variables: { url: longUrl },
           })
           .expect(200)

@@ -24,7 +24,7 @@ server.use(
   })
 );
 
-const defaultQuery = `mutation tinyUrl($url: String!) {
+const defaultQuery = `query tinyUrl($url: String!) {
   shortenURL(url: $url) {
     urlCode
     longUrl

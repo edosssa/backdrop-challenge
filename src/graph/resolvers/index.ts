@@ -1,5 +1,5 @@
-import { shortenUrlMutation } from "./shortenUrl";
+import { shortenURL } from "./shortenUrl";
 
 export const resolverRoot = {
-  shortenURL: shortenUrlMutation,
+  shortenURL,
 };

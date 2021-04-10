@@ -1,6 +1,6 @@
 import { buildSchema } from "graphql";
 
-const source = `
+export const schema = buildSchema(`
 type Url {
     urlCode: String!
     longUrl: String!
@@ -8,12 +8,7 @@ type Url {
     host: String!
   }
   
-  type Mutation {
+  type Query {
     shortenURL(url: String!): Url!
   }
-  
-  type Query {
-    _empty: Boolean
-  }
-  `;
-export const schema = buildSchema(source);
+`);

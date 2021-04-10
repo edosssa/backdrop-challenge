@@ -6,7 +6,7 @@ type ShortenUrlArgs = {
   url: string;
 };
 
-export const shortenUrlMutation = async (args: ShortenUrlArgs, ctx: Context) => {
+export const shortenURL = async (args: ShortenUrlArgs, ctx: Context) => {
   const longUrl = args.url;
   const baseUrl = process.env.BASE_URL as string;
 

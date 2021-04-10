@@ -12,7 +12,7 @@ describe("Generated short urls", () => {
       .post("/graphql")
       .set("Accept", "application/json")
       .expect("Content-Type", /json/)
-      .send({ query: `mutation tiny($url: String!) { shortenURL(url: $url) { shortUrl, host } }`, variables: { url } })
+      .send({ query: `query tiny($url: String!) { shortenURL(url: $url) { shortUrl, host } }`, variables: { url } })
       .expect(200)
       .end((err, res) => {
         // console.log(JSON.stringify(res.body));
