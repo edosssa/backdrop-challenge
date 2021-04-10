@@ -1,7 +1,5 @@
 # Backdrop Code Challenge
 
-This repository contains code for the Backdrop coding challenge.
-
 View the deployed version at [https://backdrop-challenge.herokuapp.com](https://backdrop-challenge.herokuapp.com/graphiql) 🚀 
 
 ## What's inside ✨
