@@ -4,7 +4,7 @@ This repository contains code for the Backdrop coding challenge.
 
 View the deployed version at [https://backdrop-challenge.herokuapp.com](https://backdrop-challenge.herokuapp.com/graphiql) 🚀 
 
-## What's inside ✨:
+## What's inside ✨
 
 - Fully functional GraphQL server as per the challenge requirements
 - Integration tests using Mocha, Chai and supertest
