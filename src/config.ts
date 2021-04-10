@@ -1,9 +1,7 @@
-import * as dotenv from "dotenv";
-
 export function load() {
   // This is a noop in production
   if (process.env.NODE_ENV !== "production") {
-    dotenv.config();
+    require("dotenv").config();
   }
 }
 
