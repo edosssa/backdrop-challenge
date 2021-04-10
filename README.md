@@ -1,8 +1,8 @@
 # Backdrop Code Challenge
 
-View the deployed version at [https://backdrop-challenge.herokuapp.com](https://backdrop-challenge.herokuapp.com/graphiql) 🚀 
+View the deployed version at [https://backdrop-challenge.herokuapp.com](https://backdrop-challenge.herokuapp.com/graphiql) 🚀
 
-## What's inside ✨
+## Highlights ✨
 
 - Fully functional GraphQL server as per the challenge requirements
 - Integration tests using Mocha, Chai and supertest
@@ -18,9 +18,10 @@ yarn start # or yarn dev
 ```
 
 ## TL;DR
+
 ### To Query or not to Query
 
-The challenge requirements specify that the GraphQL server have a single ```shortenURL``` **query**. However, as per the GraphQL [specification](http://spec.graphql.org/draft/#sec-Mutation) it could be better implemented as a **mutation** instead because it modifies server resources akin to a http POST. Most GraphQL server implementations run queries in **parallel** which could lead to a race condition (albeit astronomically rare) where one operation containing multiple aliased shortenURL queries would generate the same shortUrl for two different long urls. As a result, the short url would resolve to the url of the last executed ```shortenURL``` query. Mutations on the other hand are resolved serially because they perform side-effects and will not have such a race-condition.
+The challenge requirements specify that the GraphQL server have a single `shortenURL` **query**. However, as per the GraphQL [specification](http://spec.graphql.org/draft/#sec-Mutation) it could be better implemented as a **mutation** instead because it modifies server resources akin to a http POST. Most GraphQL server implementations run queries in **parallel** which could lead to a race condition (albeit astronomically rare) where one operation containing multiple aliased shortenURL queries would generate the same shortUrl for two different long urls. As a result, the short url would resolve to the url of the last executed `shortenURL` query. Mutations on the other hand are resolved serially and will not have such a race condition.
 
 ### Schema first vs Code first
 
@@ -28,8 +29,6 @@ For this challenge I decided to use the schema-first approach to show that I can
 
 <br/>
 
->PS: I do hope I'm considered for the role.
+> PS: I do hope I'm considered for the role.
 
 <p align="center">Made with lots of 💙 by Kelvin</p>
-
-
