@@ -2,7 +2,7 @@ import chai from "chai";
 import supertest from "supertest";
 import { shortenUrlRequest } from "./util";
 import validUrl from "valid-url";
-import config  from "../src/config";
+import config from "../src/config";
 import { nanoid } from "nanoid";
 import normalizeUrl from "normalize-url";
 import { http } from "follow-redirects";
@@ -41,9 +41,8 @@ describe("Redirect", () => {
       chai.assert.exists(shortUrl);
       chai.assert.isTrue(!!validUrl.isWebUri(shortUrl));
 
-      // Supertest doesn't seem to follow redirects properly 
-      http
-        .request(shortUrl, (response) => {
+      // Supertest doesn't seem to follow redirects properly
+      http.request(shortUrl, (response) => {
           chai.assert.equal(normalizeUrl(url), normalizeUrl(response.responseUrl));
           done();
         })
@@ -53,6 +52,11 @@ describe("Redirect", () => {
 
   it("returns 404 for invalid short url", (done) => {
     const invalidUrl = config.get("baseUrl") + "/" + nanoid(6);
-    testAgent.get(invalidUrl).expect(404).end(done);
+    http.request(invalidUrl, (response) => {
+        console.log(config.get("baseUrl"), response.statusCode, response);
+        chai.assert.equal(404, response.statusCode);
+        done();
+      })
+      .end();
   });
 });
