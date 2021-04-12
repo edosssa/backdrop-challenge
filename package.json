@@ -19,7 +19,7 @@
     "nanoid": "^3.1.22",
     "shortid": "^2.2.16",
     "valid-url": "^1.0.9",
-    "snake-case": "^3.0.4",
+    "snake-case": "^3.0.4"
   },
   "devDependencies": {
     "@types/chai": "^4.2.16",
