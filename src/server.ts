@@ -25,12 +25,7 @@ server.use(
 );
 
 const defaultQuery = `query tinyUrl($url: String!) {
-  shortenURL(url: $url) {
-    urlCode
-    longUrl
-    shortUrl
-    host
-  }
+  shortenURL(url: $url)
 }`;
 
 server.use("/graphiql", graphiql({ query: defaultQuery, variables: { url: "https://buycoins.africa" } }));

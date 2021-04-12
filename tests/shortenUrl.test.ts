@@ -1,51 +1,60 @@
 import chai from "chai";
+import supertest from "supertest";
 import validUrl from "valid-url";
-import { request } from "./util";
+import { shortenUrlRequest } from "./util";
+import getFreePort from "get-port";
+import { server } from "../src/server";
+import { Server } from "net";
+import config from "../src/config";
+
+let testAgent: supertest.SuperTest<supertest.Test>;
+let listener: Server;
 
 describe("ShortenUrl mutation", () => {
-  it("Returns a valid short url", (done) => {
-    request
-      .post("/graphql")
-      .set("Accept", "application/json")
-      .expect("Content-Type", /json/)
-      .send({
-        query: "query tiny($url: String!) { shortenURL(url: $url) { shortUrl } }",
-        variables: { url: "https://google.com" },
-      })
-      .expect(200)
-      .end((err, res) => {
-        if (err) return done(err);
-        const shortUrl = res.body.data.shortenURL.shortUrl;
-        chai.assert.exists(shortUrl);
-        chai.assert.isTrue(!!validUrl.isWebUri(shortUrl));
-        done();
+  before(async () => {
+    const port = await getFreePort();
+    listener = server.listen(port, () => {
+      config.set("port", port.toString());
+    });
+    testAgent = supertest(listener);
+  });
+
+  after(() => {
+    return new Promise<void>((resolve, reject) => {
+      listener.close((err) => {
+        if (err) return reject();
+        resolve();
       });
+    });
+  });
+
+  it("Returns a valid short url", (done) => {
+    const url = "https://google.com";
+
+    shortenUrlRequest(testAgent, { url }).end((err, res) => {
+      if (err) return done(err);
+      const shortUrl = res.body.data.shortUrl;
+      chai.assert.exists(shortUrl);
+      chai.assert.isTrue(!!validUrl.isWebUri(shortUrl));
+      done();
+    });
   });
 
   it("Returns same short url for multiple calls", (done) => {
-    const getShortUrl = (longUrl: string): Promise<string> => {
+    const getShortUrl = (url: string): Promise<string> => {
       return new Promise((resolve) => {
-        request
-          .post("/graphql")
-          .set("Accept", "application/json")
-          .expect("Content-Type", /json/)
-          .send({
-            query: "query tiny($url: String!) { shortenURL(url: $url) { shortUrl } }",
-            variables: { url: longUrl },
-          })
-          .expect(200)
-          .end((err, res) => {
-            if (err) return done(err);
-            const shortUrl = res.body.data.shortenURL.shortUrl;
-            chai.assert.exists(shortUrl);
-            chai.assert.isTrue(!!validUrl.isWebUri(shortUrl));
-            resolve(shortUrl);
-          });
+        shortenUrlRequest(testAgent, { url }).end((err, res) => {
+          if (err) return done(err);
+          const shortUrl = res.body.data.shortUrl;
+          chai.assert.exists(shortUrl);
+          chai.assert.isTrue(!!validUrl.isWebUri(shortUrl));
+          resolve(shortUrl);
+        });
       });
     };
 
     const url = "https://google.com";
-    
+
     getShortUrl(url).then((shortUrl) => {
       getShortUrl(url).then((shortUrl2) => {
         chai.assert.equal(shortUrl, shortUrl2);

@@ -1,4 +1,17 @@
 import supertest from "supertest";
-import { server } from "../src/server";
 
-export const request: supertest.SuperTest<supertest.Test> = supertest(server);
+export const shortenUrlRequest = (
+  testAgent: supertest.SuperTest<supertest.Test>,
+  variables: Record<string, string>
+): supertest.Test => {
+  const query = `
+    query tiny($url: String!) { 
+        shortUrl: shortenURL(url: $url) 
+    }`;
+
+  return testAgent
+    .post("/graphql")
+    .set("Accept", "application/json")
+    .expect("Content-Type", /json/)
+    .send({ query, variables });
+};

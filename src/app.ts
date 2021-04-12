@@ -1,6 +1,11 @@
-import { getPort, load as loadConfig } from "./config";
+import config from "./config";
 import { server } from "./server";
 
-loadConfig();
-const PORT = getPort();
-server.listen(PORT, () => console.log(`GraphQL API running at http://localhost:${PORT}/graphql 🚀`));
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
+const port = config.get("port");
+server.listen(port, () =>
+  console.log(`GraphQL API running at http://localhost:${port}/graphql 🚀`)
+);
