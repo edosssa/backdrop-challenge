@@ -13,7 +13,7 @@ import { Server } from "net";
 let testAgent: supertest.SuperTest<supertest.Test>;
 let listener: Server;
 
-describe("Redirects", () => {
+describe("Redirect", () => {
   before(async () => {
     const port = await getFreePort();
     listener = server.listen(port, () => {

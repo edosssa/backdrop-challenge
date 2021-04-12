@@ -10,7 +10,7 @@ import config from "../src/config";
 let testAgent: supertest.SuperTest<supertest.Test>;
 let listener: Server;
 
-describe("ShortenUrl mutation", () => {
+describe("ShortenUrl", () => {
   before(async () => {
     const port = await getFreePort();
     listener = server.listen(port, () => {
