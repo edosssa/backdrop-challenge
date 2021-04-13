@@ -1,35 +1,26 @@
 import chai from "chai";
 import supertest from "supertest";
-import { shortenUrlRequest } from "./util";
+import { bindServerToRandomPort, shortenUrlRequest } from "./util";
 import validUrl from "valid-url";
 import config from "../src/config";
 import { nanoid } from "nanoid";
 import normalizeUrl from "normalize-url";
 import { http } from "follow-redirects";
-import getFreePort from "get-port";
-import { server } from "../src/server";
 import { Server } from "net";
-
-let testAgent: supertest.SuperTest<supertest.Test>;
-let listener: Server;
+import { promisify } from "util";
 
 describe("Redirect", () => {
+  let testAgent: supertest.SuperTest<supertest.Test>;
+  let srv: Server;
+
   before(async () => {
-    const port = await getFreePort();
-    listener = server.listen(port, () => {
-      config.set("port", port.toString());
-      config.set("baseUrl", `http://localhost:${port}`);
-    });
-    testAgent = supertest(listener);
+    srv = await bindServerToRandomPort();
+    testAgent = supertest(srv);
   });
 
-  after(() => {
-    return new Promise<void>((resolve, reject) => {
-      listener.close((err) => {
-        if (err) return reject();
-        resolve();
-      });
-    });
+  after(async () => {
+    const closeAsync = promisify(srv.close);
+    await closeAsync.bind(srv)();
   });
 
   it("work for valid short url", (done) => {

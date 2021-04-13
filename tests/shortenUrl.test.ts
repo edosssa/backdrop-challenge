@@ -1,31 +1,22 @@
 import chai from "chai";
 import supertest from "supertest";
 import validUrl from "valid-url";
-import { shortenUrlRequest } from "./util";
-import getFreePort from "get-port";
-import { server } from "../src/server";
+import { bindServerToRandomPort, shortenUrlRequest } from "./util";
 import { Server } from "net";
-import config from "../src/config";
-
-let testAgent: supertest.SuperTest<supertest.Test>;
-let listener: Server;
+import { promisify } from "util";
 
 describe("ShortenUrl", () => {
+  let testAgent: supertest.SuperTest<supertest.Test>;
+  let srv: Server;
+
   before(async () => {
-    const port = await getFreePort();
-    listener = server.listen(port, () => {
-      config.set("port", port.toString());
-    });
-    testAgent = supertest(listener);
+    srv = await bindServerToRandomPort();
+    testAgent = supertest(srv);
   });
 
-  after(() => {
-    return new Promise<void>((resolve, reject) => {
-      listener.close((err) => {
-        if (err) return reject();
-        resolve();
-      });
-    });
+  after(async () => {
+    const closeAsync = promisify(srv.close);
+    await closeAsync.bind(srv)();
   });
 
   it("Returns a valid short url", (done) => {
