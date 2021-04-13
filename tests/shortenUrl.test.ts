@@ -27,7 +27,6 @@ describe("ShortenUrl", () => {
       .end((err, res) => {
         if (err) return done(err);
         const shortUrl = res.body.data.shortUrl;
-        chai.assert.exists(shortUrl);
         chai.assert.isTrue(!!validUrl.isWebUri(shortUrl));
         done();
       });
@@ -50,7 +49,6 @@ describe("ShortenUrl", () => {
         shortenUrlRequest(testAgent, { url }).end((err, res) => {
           if (err) return done(err);
           const shortUrl = res.body.data.shortUrl;
-          chai.assert.exists(shortUrl);
           chai.assert.isTrue(!!validUrl.isWebUri(shortUrl));
           resolve(shortUrl);
         });
