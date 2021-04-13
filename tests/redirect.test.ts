@@ -26,19 +26,21 @@ describe("Redirect", () => {
   it("work for valid short url", (done) => {
     const url = "https://buycoins.africa";
 
-    shortenUrlRequest(testAgent, { url }).end((err, res) => {
-      if (err) return done(err);
-      const shortUrl = res.body.data.shortUrl;
-      chai.assert.exists(shortUrl);
-      chai.assert.isTrue(!!validUrl.isWebUri(shortUrl));
+    shortenUrlRequest(testAgent, { url })
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+        const shortUrl = res.body.data.shortUrl;
+        chai.assert.exists(shortUrl);
+        chai.assert.isTrue(!!validUrl.isWebUri(shortUrl));
 
-      http
-        .request(shortUrl, (response) => {
-          chai.assert.equal(normalizeUrl(url), normalizeUrl(response.responseUrl));
-          done();
-        })
-        .end();
-    });
+        http
+          .request(shortUrl, (response) => {
+            chai.assert.equal(normalizeUrl(url), normalizeUrl(response.responseUrl));
+            done();
+          })
+          .end();
+      });
   });
 
   it("returns 404 for invalid short url", (done) => {
