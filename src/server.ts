@@ -3,12 +3,12 @@ import { graphqlHTTP } from "express-graphql";
 import { graphiql } from "./graphiql";
 import { resolverRoot, schema } from "./graph";
 import { getDefaultContext, setDefaultContext } from "./graph/context";
-import { InMemoryAdapter } from "./storage";
+import { InMemoryAdapter } from "./store";
 import { redirectToUrl } from "./routes";
 
 export const server = express();
 // This can be swapped out for say a Redis or a MongoDB implementation. See src/lib/storage
-setDefaultContext({ db: new InMemoryAdapter() });
+setDefaultContext({ store: new InMemoryAdapter() });
 // setDefaultContext({ db: new RedisAdapter() });
 
 server.use(

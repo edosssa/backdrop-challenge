@@ -1,7 +1,7 @@
-import { StorageAdapter } from "../storage/adapter";
+import { StorageAdapter } from "../store/adapter";
 
 export interface Context {
-  db: StorageAdapter;
+  store: StorageAdapter;
 }
 
 let instance: Context;

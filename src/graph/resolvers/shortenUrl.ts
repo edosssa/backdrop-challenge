@@ -19,14 +19,14 @@ export const shortenURL = async (args: ShortenUrlArgs, ctx: Context) => {
     throw new Error("Invalid URL. Please enter a valid url for shortening.");
   }
 
-  const url = await ctx.db.findByLongUrl(longUrl);
+  const url = await ctx.store.findByLongUrl(longUrl);
   // If this url has already been shortened, just return it
   if (url) return url.shortUrl;
 
   const urlCode = nanoid.nanoid(6);
   const shortUrl = baseUrl + "/" + urlCode;
 
-  await ctx.db.create({ longUrl, shortUrl, urlCode });
+  await ctx.store.create({ longUrl, shortUrl, urlCode });
 
   return shortUrl
 };

@@ -6,12 +6,12 @@ export const redirectToUrl = Router();
 redirectToUrl.get("/:shortUrl", async (req, res) => {
   const shortUrlCode = req.params.shortUrl;
   const ctx = getDefaultContext();
-  const url = await ctx.db.findByUrlCode(shortUrlCode);
+  const url = await ctx.store.findByUrlCode(shortUrlCode);
 
   if (!url) {
     return res.status(404).json("The short url doesn't exist in our system.");
   }
 
-  await ctx.db.save(url);
+  await ctx.store.save(url);
   return res.redirect(url.longUrl);
 });
