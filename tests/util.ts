@@ -22,7 +22,7 @@ export const shortenUrlRequest = (
 export async function bindServerToRandomPort() {
   const port = await getFreePort();
   return server.listen(port, () => {
-    // Since we are binding the server to a random port we need to update the config early so that
+    // Since we are binding the server to a random port we need to update the config early so
     // the shortenUrl resolver is aware and can generate valid short urls
     config.set("port", port.toString());
     config.set("baseUrl", `http://localhost:${port}`);
