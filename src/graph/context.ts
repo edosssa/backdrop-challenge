@@ -1,4 +1,4 @@
-import { StorageAdapter } from "../lib/storage/adapter";
+import { StorageAdapter } from "../storage/adapter";
 
 export interface Context {
   db: StorageAdapter;

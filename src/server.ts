@@ -3,7 +3,7 @@ import { graphqlHTTP } from "express-graphql";
 import { graphiql } from "./graphiql";
 import { resolverRoot, schema } from "./graph";
 import { getDefaultContext, setDefaultContext } from "./graph/context";
-import { InMemoryAdapter } from "./lib/storage";
+import { InMemoryAdapter } from "./storage";
 import { redirectToUrl } from "./routes";
 
 export const server = express();
