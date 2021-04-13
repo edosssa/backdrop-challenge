@@ -11,11 +11,11 @@ export const shortenURL = async (args: ShortenUrlArgs, ctx: Context) => {
   const longUrl = args.url;
   const baseUrl = config.get("baseUrl");
 
-  if (!validUrl.isUri(baseUrl)) {
+  if (!validUrl.isWebUri(baseUrl)) {
     throw new Error("Internal error. Please come back later.");
   }
 
-  if (!validUrl.isUri(longUrl)) {
+  if (!validUrl.isWebUri(longUrl)) {
     throw new Error("Invalid URL. Please enter a valid url for shortening.");
   }
 

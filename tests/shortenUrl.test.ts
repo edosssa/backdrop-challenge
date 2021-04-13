@@ -31,11 +31,24 @@ describe("ShortenUrl", () => {
   it("Returns a valid short url", (done) => {
     const url = "https://google.com";
 
-    shortenUrlRequest(testAgent, { url }).end((err, res) => {
+    shortenUrlRequest(testAgent, { url })
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+        const shortUrl = res.body.data.shortUrl;
+        chai.assert.exists(shortUrl);
+        chai.assert.isTrue(!!validUrl.isWebUri(shortUrl));
+        done();
+      });
+  });
+
+  it("Returns an error for an invalid url", (done) => {
+    const invalidUrl = "httpx://google.com";
+
+    shortenUrlRequest(testAgent, { url: invalidUrl }).end((err, res) => {
       if (err) return done(err);
-      const shortUrl = res.body.data.shortUrl;
-      chai.assert.exists(shortUrl);
-      chai.assert.isTrue(!!validUrl.isWebUri(shortUrl));
+      const errors = res.body.errors;
+      chai.assert.exists(errors);
       done();
     });
   });
